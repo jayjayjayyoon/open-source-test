@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite';
 
-// Use React's automatic JSX runtime in both development and production.
-// App.jsx intentionally imports hooks, not the default React namespace.
-export default defineConfig({
+// GitHub Pages serves this project under /open-source-test/.
+// Keep the root path for local development at http://localhost:5173/.
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/open-source-test/' : '/',
   esbuild: {
     jsx: 'automatic',
   },
-});
+}));
