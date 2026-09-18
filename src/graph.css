@@ -1,0 +1,28 @@
+/* The open-source renderer handles interactions; our CSS supplies the orbit-node look. */
+.react-flow__node-project{overflow:visible!important}
+.project-node{
+  width:120px;height:120px;min-height:120px;padding:13px;
+  flex-direction:column;justify-content:center;align-items:center;gap:7px;
+  text-align:center;border-radius:50%;
+  background:radial-gradient(circle at 33% 27%,#28496b,#12273f 62%,#0e1d30);
+  border:1px solid #41769c;
+  box-shadow:inset 0 0 22px #4099e718,0 0 0 7px #22588b0b,0 0 37px #2987e02c;
+}
+.project-node.node-core{
+  width:151px;height:151px;min-height:151px;padding:15px;
+  background:radial-gradient(circle at 35% 27%,#3167a2,#163f68 54%,#101e39);
+  border:1px solid #79c8ff;
+  box-shadow:inset 0 0 25px #8dd7ff33,0 0 0 9px #2f8ef20a,0 0 60px #268feb6b;
+}
+.node-symbol{width:44px;height:44px;border-radius:50%;font-size:22px;box-shadow:0 0 22px #4eaeff3b}
+.node-core .node-symbol{width:51px;height:51px;font-size:26px}
+.node-copy{flex:0 0 auto;width:100%;align-items:center;gap:0}
+.node-copy strong{white-space:normal;overflow-wrap:break-word;font-size:11px;line-height:1.25;letter-spacing:-.45px}
+.node-core .node-copy strong{font-size:13px}
+.node-copy>span{display:none}
+.node-status{top:-7px;right:-17px;box-shadow:0 3px 14px #050c1a77}
+.project-node:has(.node-symbol.status-next){border-color:#7965be;background:radial-gradient(circle at 33% 23%,#3c3464,#221d3d 68%,#171529);box-shadow:0 0 33px #7a56cd36}
+.project-node:has(.node-symbol.status-waiting){border-color:#966b42;background:radial-gradient(circle at 33% 23%,#59402d,#34251d 66%,#251b1a);box-shadow:0 0 33px #e8a04f30}
+.project-node:has(.node-symbol.status-done){border-color:#4a9f84;background:radial-gradient(circle at 33% 23%,#285b51,#153a37 65%,#0e2627);box-shadow:0 0 33px #31bb9360}
+.project-node:hover,.project-node.is-selected{border-color:#c8eaff;box-shadow:0 0 0 2px #5bacf866,0 0 55px #4095ea75}
+.graph-handle{opacity:0!important}
