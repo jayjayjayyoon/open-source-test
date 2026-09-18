@@ -1,8 +1,15 @@
 # Project Map Lab — open-source-test
 
-> **실험 전용 프로토타입.** 정식 Control Tower나 실시간 프로젝트 데이터베이스가 아닙니다.
+> 실험 전용 프로토타입. 정식 Control Tower나 실시간 프로젝트 데이터베이스가 아닙니다.
 
-현재 채팅에서 합의한 정보만 샘플 데이터로 사용하여 [React Flow](https://reactflow.dev/) 기반 인터랙티브 그래프를 시험합니다.
+## 두 가지 실험 화면
+
+- **기존 11개 노드 데모:** https://jayjayjayyoon.github.io/open-source-test/
+- **규모 확장 실험 V0.2:** https://jayjayjayyoon.github.io/open-source-test/scale-lab.html
+
+규모 확장 실험에서는 **50·200·1,000개**의 *완전한 가상 데이터*를 생성합니다. `단계별 탐색`과 `전체 표시`를 같은 데이터 규모에서 전환해 가독성과 조작 반응을 직접 비교합니다. 1,000개 전체 표시는 브라우저에 부담이 될 수 있으므로 단계별 탐색을 기본값으로 사용하세요.
+
+단계별 탐색: 전체(6개) → 분야 선택(10개) → 프로젝트 선택(해당 작업 추가). 전체 표시는 해당 규모의 모든 노드와 관계를 보여주는 부하 시험입니다. 어느 쪽이 편한지는 사용자가 직접 확인한 뒤 판단합니다.
 
 ## PC에서 실행
 
@@ -13,39 +20,33 @@ npm install
 npm run dev
 ```
 
-터미널에 표시되는 로컬 주소(일반적으로 `http://localhost:5173/`)를 브라우저에서 엽니다. 개발 서버를 종료하면 로컬 사이트도 중지됩니다.
+기존 화면: `http://localhost:5173/`, 규모 실험: `http://localhost:5173/scale-lab.html`. 개발 서버를 종료하면 로컬 사이트도 중지됩니다.
 
-## GitHub Pages에 배포
+## GitHub Pages 배포
 
-GitHub Actions 배포 설정은 `.github/workflows/deploy-pages.yml`에 포함되어 있습니다. Vite의 프로덕션 빌드는 `/open-source-test/` 경로를 사용하고, 로컬 개발은 `/`를 사용합니다.
+`main`에 코드가 올라가면 `.github/workflows/deploy-pages.yml`이 테스트, 빌드, 배포를 수행합니다. Vite 빌드는 두 HTML 페이지 모두 `/open-source-test/` 경로에서 작동하도록 설정했습니다. [Actions 실행 결과](https://github.com/jayjayjayyoon/open-source-test/actions/workflows/deploy-pages.yml)에서 배포 성공 여부를 확인하세요.
 
-**저장소 소유자가 GitHub 웹 화면에서 최초 1회 활성화해야 합니다.**
+저장소 소유자는 [Settings → Pages](https://github.com/jayjayjayyoon/open-source-test/settings/pages)에서 Source를 `GitHub Actions`로 설정해야 합니다. 공개 저장소와 공개 사이트에는 개인 자료, 인증 토큰, 비밀키를 넣지 마세요.
 
-1. [Settings → Pages](https://github.com/jayjayjayyoon/open-source-test/settings/pages)로 이동합니다.
-2. `Build and deployment` 아래 `Source`에서 `GitHub Actions`를 선택합니다.
-3. [Actions → Deploy Project Map Lab to GitHub Pages](https://github.com/jayjayjayyoon/open-source-test/actions/workflows/deploy-pages.yml)에서 기존 실패 실행의 `Re-run all jobs` 또는 `Run workflow`를 사용합니다.
-4. 실행이 성공하면 예상 주소 `https://jayjayjayyoon.github.io/open-source-test/`에서 확인합니다. **배포 성공 전에는 주소가 활성화되었다고 가정하지 마세요.**
+## 검증할 것
 
-코드가 `main`에 반영되면 빌드·검증·배포가 자동 실행됩니다. 배포된 사이트는 집 PC 전원이 꺼져 있어도 접속할 수 있습니다. 공개 저장소와 공개 사이트에는 개인 자료, 인증 토큰, 비밀키를 넣지 마세요.
+- 노드 드래그, 연결선, 확대·축소, 클릭 후 상세 정보 변경
+- 50 / 200 / 1,000개 각각에서 전체 표시와 단계별 탐색 비교
+- 전체 표시 시 텍스트가 읽히는지, 브라우저 반응이 괜찮은지 직접 확인
+- 분야 → 프로젝트 → 작업으로 좁혀 보았을 때 원하는 정보를 찾기 쉬운지 확인
+- 하단 체크리스트와 자유 메모로 결과를 정리하고, 필요하면 텍스트 복사
 
-## 직접 시험할 기능
+## 데이터 및 기능 경계
 
-- 원형 노드 드래그, 연결선, 확대·축소, 미니맵
-- 노드 클릭 → 상태/목적/다음 행동/출처 표시
-- NOW / NEXT / WAITING / DONE 필터 및 텍스트 검색
-- 검증 보드 체크리스트 (브라우저 메모리에서만 반영되며 새로고침 시 초기화)
-- 모바일·데스크톱 화면 구성
-
-## 데이터 범위
-
-- `src/data.js`는 **현재 채팅에서 확인된 선택과 제안만** 수동 입력한 샘플입니다.
-- Notion, GitHub API, 기존 대화, 사용자 개인 자료를 자동 수집하거나 동기화하지 않습니다.
-- 실제 기한·완료율·프로젝트 진행 상황을 임의 생성하지 않습니다.
-- `WAITING`은 데모 성공 후 검토를 의미합니다.
-- 체크 표시는 다른 기기와 공유되지 않으며 서버나 GitHub에 저장되지 않습니다.
+- 기존 데모 `src/data.js`는 이 채팅의 명시적인 의사결정만 샘플로 사용합니다.
+- 규모 실험 `src/scaleData.js`는 실제 개인 자료가 아닌 결정적 가상 노드·관계를 생성합니다.
+- Notion, GitHub API, 다른 대화나 개인 자료는 자동 수집·동기화하지 않습니다.
+- 실제 기한이나 프로젝트 진행률을 만들어내지 않습니다.
+- 체크 및 메모는 브라우저 메모리에서만 유지되며 새로고침하면 초기화됩니다. 다른 기기와도 공유되지 않습니다.
+- 화면의 데이터 개수는 정확히 생성하지만 브라우저 성능이나 반응 속도를 보장하거나 실측 결과라고 주장하지 않습니다.
 
 ## 기술과 다음 단계
 
-React, [@xyflow/react](https://github.com/xyflow/xyflow) (MIT), Vite, lucide-react를 사용합니다. 최초 설치 및 Actions 빌드에는 인터넷 연결이 필요합니다.
+React, [@xyflow/react](https://github.com/xyflow/xyflow) (MIT), Vite, lucide-react를 사용합니다. 최초 설치 및 GitHub Actions 빌드에는 인터넷 연결이 필요합니다.
 
-그래프/상세 패널/필터의 사용성을 검증하고, 만족스러울 경우에만 정식 Control Tower 저장소를 따로 만듭니다. 실제 자료 연동은 그다음에 권한, 기준 데이터, 동기화 규칙을 정하고 구현합니다.
+규모별 사용성을 시험한 뒤 실제 Control Tower에서 전체 지도, 분야별 탐색, 프로젝트 상세를 어떻게 나눌지 결정합니다. 정식 저장소 생성 및 실제 자료 연동은 그다음입니다.
