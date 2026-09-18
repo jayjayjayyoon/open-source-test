@@ -1,0 +1,23 @@
+/* V0.4: visually important topics get larger circles; no relationship data or ranking is changed. */
+.relationship-flow .react-flow__node.importance-core { --orb-size: 150px; --orb-font-size: 14px; }
+.relationship-flow .react-flow__node.importance-major { --orb-size: 112px; --orb-font-size: 12px; }
+.relationship-flow .react-flow__node.importance-detail { --orb-size: 76px; --orb-font-size: 10px; }
+.relationship-flow .react-flow__node .kn-node { width: calc(var(--orb-size) + 28px); height: calc(var(--orb-size) + 40px); }
+.relationship-flow .react-flow__node .kn-orb { width: var(--orb-size); height: var(--orb-size); flex: 0 0 var(--orb-size); padding: 9px; }
+.relationship-flow .react-flow__node .kn-orb span { font-size: var(--orb-font-size); line-height: 1.35; overflow-wrap: anywhere; }
+.relationship-flow .react-flow__node .kn-node .react-flow__handle { top: calc(var(--orb-size) / 2); }
+.relationship-flow .react-flow__node.importance-core .kn-orb { border-width: 2px; box-shadow: 0 0 30px #72bfff57; }
+.relationship-flow .react-flow__node.importance-detail .kn-tag { font-size: 9px; }
+.importance-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; padding: 13px 16px; margin-bottom: 12px; background: #132237; border: 1px solid #345372; border-radius: 12px; color: #d5e8fa; }
+.importance-legend>strong { font-size: 12px; margin-right: 5px; }
+.importance-legend>span { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.importance-legend small { font-size: 10px; color: #8fafce; }
+.importance-dot { display: inline-block; border-radius: 50%; border: 1px solid #92cdff; background: #315c88; box-shadow: 0 0 8px #4a9ef555; }
+.importance-dot-core { width: 29px; height: 29px; }
+.importance-dot-major { width: 22px; height: 22px; }
+.importance-dot-detail { width: 15px; height: 15px; }
+.importance-legend em { margin-left: auto; font-size: 10px; line-height: 1.5; font-style: normal; color: #94aecb; }
+.relationship-visual-level { border: 1px solid #426384; border-radius: 9px; background: #192e47; padding: 11px; margin: 3px 0 12px; display: flex; flex-direction: column; gap: 5px; }
+.relationship-visual-level strong { color: #a5d8ff; font-size: 12px; }
+.relationship-visual-level span { font-size: 11px; color: #a6bed8; line-height: 1.5; }
+@media(max-width:620px) { .importance-legend { gap: 10px 13px; } .importance-legend em { flex-basis: 100%; } }
