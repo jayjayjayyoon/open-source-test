@@ -1,0 +1,65 @@
+/* Global left accordion navigation. Loaded last so it can neutralize the earlier top-navigation prototype. */
+.ct-global-layout{display:flex;min-height:100vh;background:#0b1320}
+.ct-global-sidebar{width:250px;flex:0 0 250px;min-height:100vh;background:#0f1825;border-right:1px solid #273649;padding:24px 14px 22px;display:flex;flex-direction:column;position:sticky;top:0;align-self:flex-start}
+.ct-global-content{min-width:0;flex:1}
+.ct-global-brand{display:flex;align-items:center;gap:11px;padding:0 7px 24px;border-bottom:1px solid #273649;margin-bottom:18px}
+.ct-global-brand-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:9px;background:#1b3045;border:1px solid #35536d;color:#9ed2f4;flex-shrink:0}
+.ct-global-brand>span:last-child{display:flex;flex-direction:column;gap:5px;min-width:0}
+.ct-global-brand strong{font-size:13px;letter-spacing:.7px;color:#e5f1ff;white-space:nowrap}
+.ct-global-brand small{font-size:8px;letter-spacing:1.3px;color:#7e94ad;font-weight:800;white-space:nowrap}
+.ct-accordion{display:grid;gap:6px}
+.ct-accordion-group{border-radius:10px}
+.ct-accordion-trigger{width:100%;border:1px solid transparent;background:transparent;color:#a4b5c8;border-radius:9px;min-height:45px;padding:11px 10px;display:flex;align-items:center;gap:10px;text-align:left;font-size:12px;font-weight:750}
+.ct-accordion-trigger:hover{background:#182838;color:#eef7ff}
+.ct-accordion-group.is-active>.ct-accordion-trigger{color:#d8edff}
+.ct-accordion-trigger svg:last-child{margin-left:auto;color:#70879f}
+.ct-accordion-pages{display:grid;gap:3px;padding:2px 0 7px 31px}
+.ct-accordion-page{border:0;background:transparent;color:#8fa2b8;width:100%;min-height:35px;border-radius:7px;padding:8px 10px;text-align:left;font-size:11px;position:relative}
+.ct-accordion-page:hover{background:#172637;color:#dcecff}
+.ct-accordion-page.is-active{background:#20394e;color:#e5f4ff;font-weight:750}
+.ct-accordion-page.is-active:before{content:"";position:absolute;left:-8px;top:10px;width:3px;height:15px;border-radius:4px;background:#6dbcf1}
+.ct-global-note{display:flex;align-items:flex-start;gap:8px;margin-top:auto;padding:13px 10px;border-top:1px solid #263548;color:#7f94aa;font-size:9.5px;line-height:1.6}
+.ct-global-note svg{flex-shrink:0;margin-top:1px}
+.ct-secondary-layout-no-sidebar{min-height:100vh}
+
+/* Home and legacy Project Map already had their own sidebars. The global sidebar replaces them. */
+.ct-global-content .ct-home-sidebar{display:none!important}
+.ct-global-content .ct-home-layout{display:block!important;min-height:100vh}
+.ct-global-content .ct-project-surface .sidebar{display:none!important}
+.ct-global-content .ct-project-surface .app-shell{display:block!important;min-height:100vh}
+.ct-global-content .ct-project-surface .workspace{width:100%}
+
+/* Old horizontal sector bar is no longer used by the shell. */
+.ct-sector-bar{display:none!important}
+
+.ct-preview-mobile .ct-global-layout{display:block}
+.ct-preview-mobile .ct-global-sidebar{position:static;width:100%;min-height:auto;display:block;padding:12px;border-right:0;border-bottom:1px solid #2b3b4f}
+.ct-preview-mobile .ct-global-brand{padding:0 2px 11px;margin-bottom:10px;border-bottom:0}
+.ct-preview-mobile .ct-global-brand small{display:none}
+.ct-preview-mobile .ct-accordion{display:flex;align-items:flex-start;gap:5px;overflow-x:auto;padding-bottom:3px;scrollbar-width:thin}
+.ct-preview-mobile .ct-accordion-group{flex:0 0 auto;min-width:118px}
+.ct-preview-mobile .ct-accordion-trigger{min-height:39px;padding:9px;font-size:10px;background:#121f2f;border-color:#273a4f}
+.ct-preview-mobile .ct-accordion-pages{padding:4px 0 0;min-width:128px}
+.ct-preview-mobile .ct-accordion-page{font-size:9.5px;min-height:31px;padding:7px 8px;background:#0d1724}
+.ct-preview-mobile .ct-accordion-page.is-active:before{display:none}
+.ct-preview-mobile .ct-global-note{display:none}
+.ct-preview-mobile .ct-global-content .ct-home-layout{min-height:auto}
+.ct-preview-mobile .ct-global-content .ct-project-surface .app-shell{min-height:auto}
+
+@media(max-width:900px){
+  .ct-preview-desktop .ct-global-sidebar{width:215px;flex-basis:215px;padding-left:10px;padding-right:10px}
+}
+@media(max-width:700px){
+  .ct-preview-desktop .ct-global-layout{min-width:1050px;display:flex}
+  .ct-preview-desktop .ct-global-sidebar{display:flex;position:sticky;width:215px;flex-basis:215px;min-height:100vh;border-right:1px solid #273649;border-bottom:0;padding:22px 10px}
+  .ct-preview-desktop .ct-global-brand{display:flex;padding:0 6px 22px;margin-bottom:17px;border-bottom:1px solid #273649}
+  .ct-preview-desktop .ct-global-brand small{display:block}
+  .ct-preview-desktop .ct-accordion{display:grid;overflow:visible;padding:0}
+  .ct-preview-desktop .ct-accordion-group{min-width:0}
+  .ct-preview-desktop .ct-accordion-trigger{font-size:12px;background:transparent;border-color:transparent}
+  .ct-preview-desktop .ct-accordion-pages{padding:2px 0 7px 31px;min-width:0}
+  .ct-preview-desktop .ct-accordion-page{font-size:11px;min-height:35px;background:transparent;padding:8px 10px}
+  .ct-preview-desktop .ct-accordion-page.is-active{background:#20394e}
+  .ct-preview-desktop .ct-accordion-page.is-active:before{display:block}
+  .ct-preview-desktop .ct-global-note{display:flex}
+}
