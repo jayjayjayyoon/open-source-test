@@ -1,0 +1,27 @@
+/* Small, restrained additions to the existing public-demo dashboard. */
+.ct-home-task-main{display:flex;align-items:center;gap:13px;flex:1;min-width:0;cursor:pointer;position:relative}
+.ct-home-task-main input{position:absolute;width:1px;height:1px;opacity:0}
+.ct-home-task-main input:focus-visible+.ct-home-checkbox{outline:2px solid #8bcaff;outline-offset:3px}
+.ct-home-task-main:hover .ct-home-checkbox{border-color:#9bcfee}
+.ct-home-task-action{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex-shrink:0;font-size:11px;font-weight:750;color:#b7ddfa;border:1px solid #39536a;background:#1a2c3d;border-radius:7px;padding:9px 11px;text-decoration:none;white-space:nowrap}
+.ct-home-task-action:hover{background:#274760;border-color:#76b7e6;color:#fff}
+.ct-home-task-action:focus-visible{outline:2px solid #8bcaff;outline-offset:3px}
+.ct-home-task-footer{display:flex;justify-content:flex-end;padding:10px 20px 2px}
+.ct-home-task-footer button{display:inline-flex;align-items:center;gap:6px;font-size:11px;border:0;background:transparent;color:#a9c3da;padding:7px 0}
+.ct-home-task-footer button:hover{color:#fff;text-decoration:underline}
+.ct-home-all-done{padding:24px 20px 16px}
+.ct-home-done-title{display:flex;align-items:center;gap:9px;color:#b0e7cf;font-size:15px;line-height:1.5}
+.ct-home-done-title svg{flex-shrink:0}
+.ct-home-all-done>p{color:#a0b5c9;font-size:12px;line-height:1.7;margin:9px 0 19px}
+.ct-home-recommendation{display:flex;flex-direction:column;align-items:flex-start;gap:9px;padding:16px;border:1px solid #375068;border-radius:9px;background:#172739}
+.ct-home-recommendation>span{font-size:10px;color:#a3bbd4}
+.ct-home-recommendation>strong{font-size:13px;font-weight:750;line-height:1.55}
+.ct-home-recommendation>a{display:inline-flex;align-items:center;gap:6px;color:#b3dcff;text-decoration:none;font-size:11px;font-weight:800;padding:6px 0}
+.ct-home-recommendation>a:hover{text-decoration:underline;color:#fff}
+@media(max-width:700px){.ct-home-task{flex-wrap:wrap}.ct-home-task-action{margin-left:34px}}
+.ct-preview-mobile .ct-home-task{flex-wrap:wrap}
+.ct-preview-mobile .ct-home-task-main{gap:9px;align-items:flex-start;flex-basis:100%}
+.ct-preview-mobile .ct-home-task-action{margin-left:30px}
+.ct-preview-mobile .ct-home-all-done{padding:20px 14px 12px}
+.ct-preview-mobile .ct-home-done-title{font-size:13px}
+.ct-preview-mobile .ct-home-task-footer{padding:9px 14px 2px}
