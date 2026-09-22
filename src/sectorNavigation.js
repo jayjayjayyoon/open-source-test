@@ -3,6 +3,7 @@ export const sectors = [
   {
     id: 'project', label: 'Project', title: '프로젝트 관리', icon: 'project',
     pages: [
+      { id: 'home', label: '오늘 요약', description: '오늘 확인할 항목, 진행 중 실험과 다음 작업을 보여주는 공개 데모 홈' },
       { id: 'map', label: '프로젝트 맵' },
       { id: 'board', label: '검증 보드' },
       { id: 'about', label: '실험 안내' },
