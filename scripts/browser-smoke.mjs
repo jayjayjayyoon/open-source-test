@@ -65,12 +65,16 @@ try {
   await page.getByRole('button', { name: '메뉴 접기' }).click();
   console.log('Smoke step 4: preview and mobile menu');
 
-  await page.getByRole('checkbox', { name: /프로젝트 맵에서 노드를 선택해 보기/ }).check();
+  // Completed items intentionally unmount immediately, so use click() rather than
+  // Playwright check(), which waits for a persistent checked state on the same node.
+  await page.getByRole('checkbox', { name: /프로젝트 맵에서 노드를 선택해 보기/ }).click();
+  await page.locator('.ct-home-task').nth(1).waitFor();
   assert.equal(await page.locator('.ct-home-task').count(), 2);
   await page.reload({ waitUntil: 'networkidle' });
   assert.equal(await page.locator('.ct-home-task').count(), 2);
-  await page.getByRole('checkbox', { name: /PC·모바일 화면/ }).check();
-  await page.getByRole('checkbox', { name: /다중 관계 그래프/ }).check();
+  await page.getByRole('checkbox', { name: /PC·모바일 화면/ }).click();
+  assert.equal(await page.locator('.ct-home-task').count(), 1);
+  await page.getByRole('checkbox', { name: /다중 관계 그래프/ }).click();
   await page.getByText('오늘의 샘플 할 일을 모두 마쳤어요. 수고했어요!').waitFor();
   assert.equal(await page.locator('.ct-home-task').count(), 0);
   assert.equal(await page.locator('.ct-home-recommendation a').getAttribute('href'), './relationship-lab.html');
