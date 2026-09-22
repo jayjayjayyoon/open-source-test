@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite';
 import { fileURLToPath } from 'node:url';
 
-// GitHub Pages hosts this repository under /open-source-test/.
-// Each lab remains an independent page so earlier demos stay intact.
-export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/open-source-test/' : '/',
+// Use one base path in build AND preview so browser tests verify deployed URLs.
+// Local dev also lives under /open-source-test/ instead of serving misleading root URLs.
+export default defineConfig({
+  base: '/open-source-test/',
   esbuild: { jsx: 'automatic' },
   build: {
     rollupOptions: {
@@ -15,4 +15,4 @@ export default defineConfig(({ command }) => ({
       },
     },
   },
-}));
+});
