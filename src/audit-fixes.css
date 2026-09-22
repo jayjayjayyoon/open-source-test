@@ -1,0 +1,46 @@
+/* Audit follow-up: one sidebar, predictable mobile navigation, no invented live data. */
+.ct-workspace-hidden{display:none!important}
+.ct-mobile-menu-toggle{display:none;align-items:center;justify-content:center;margin-left:auto;width:38px;height:38px;background:#1c3147;color:#d5eafe;border:1px solid #3d5c76;border-radius:8px;cursor:pointer}
+.ct-mobile-menu-toggle:focus-visible,.ct-accordion-trigger:focus-visible,.ct-accordion-page:focus-visible{outline:2px solid #8ecbff;outline-offset:2px}
+.ct-accordion-pages[hidden]{display:none!important}
+.ct-global-sidebar{height:100dvh;overflow-y:auto;overscroll-behavior:contain}
+.ct-global-content{min-height:100vh}
+/* The mobile preview uses the same vertical hierarchy instead of a long horizontal strip. */
+.ct-preview-mobile .ct-global-sidebar{height:auto;max-height:none;overflow:visible;position:static}
+.ct-preview-mobile .ct-global-brand{display:flex;align-items:center;margin-bottom:0;padding-bottom:5px}
+.ct-preview-mobile .ct-mobile-menu-toggle{display:inline-flex}
+.ct-preview-mobile .ct-accordion{display:grid;gap:4px;overflow-x:visible;overflow-y:auto;max-height:min(55vh,380px);padding:8px 1px 2px;scrollbar-width:thin}
+.ct-preview-mobile .ct-accordion:not(.is-mobile-open){display:none!important}
+.ct-preview-mobile .ct-accordion-group{min-width:0;width:100%}
+.ct-preview-mobile .ct-accordion-trigger{width:100%;background:transparent;border-color:transparent;font-size:12px;min-height:41px;padding:10px}
+.ct-preview-mobile .ct-accordion-pages{display:grid;min-width:0;padding:3px 0 7px 29px}
+.ct-preview-mobile .ct-accordion-page{font-size:11px;min-height:36px;background:transparent;padding:8px 10px}
+.ct-preview-mobile .ct-accordion-page.is-active{background:#20394e}
+.ct-preview-mobile .ct-global-content{min-height:0}
+/* Explicit desktop preview on a narrow physical device remains horizontally scrollable. */
+.ct-preview-desktop .ct-mobile-menu-toggle{display:none!important}
+/* Data pages describe integration truth, not mock progress percentages. */
+.ct-data-workspace{min-height:100vh;display:flex;flex-direction:column;color:#e9f0fa;background:#0c1420}
+.ct-data-main{width:100%;max-width:1050px;margin:0 auto;padding:36px 32px 110px;flex:1}
+.ct-data-eyebrow{display:flex;align-items:center;gap:8px;color:#9fc1df;font-size:12px;font-weight:750}
+.ct-data-main h1{font-size:27px;margin:15px 0 10px}
+.ct-data-main>p{font-size:13px;line-height:1.75;color:#a8bacc;max-width:780px}
+.ct-data-panel{margin-top:21px;background:#132031;border:1px solid #31465b;border-radius:11px;padding:22px}
+.ct-data-panel h2{font-size:16px;margin:0 0 14px}
+.ct-data-panel>p{font-size:12px;line-height:1.7;color:#a4b5c8;margin:0 0 17px}
+.ct-data-panel dl{margin:0}
+.ct-data-panel dl>div,.ct-data-fields>div{display:flex;align-items:baseline;justify-content:space-between;gap:20px;border-top:1px solid #2c4054;padding:12px 0;font-size:12px}
+.ct-data-panel dt,.ct-data-fields code{color:#bbd7ed}
+.ct-data-panel dd{margin:0;color:#f0cb95}
+.ct-data-fields span{color:#aabed2;text-align:right;line-height:1.5}
+.ct-data-warning{display:flex;gap:10px;align-items:flex-start;border:1px solid #63503d;background:#2a251e;padding:15px;border-radius:9px;margin-top:22px;color:#ebd2b4;font-size:12px;line-height:1.6}
+.ct-data-warning svg{flex-shrink:0}
+.ct-data-policy{display:flex;align-items:center;gap:8px;color:#a9c8bd!important;font-size:11px!important;margin-top:20px!important}
+@media(max-width:900px){.ct-data-main{padding:28px 22px 110px}}
+.ct-preview-mobile .ct-data-main{padding:24px 14px 105px}
+.ct-preview-mobile .ct-data-main h1{font-size:23px}
+.ct-preview-mobile .ct-data-panel{padding:15px}
+.ct-preview-mobile .ct-data-panel dl>div,.ct-preview-mobile .ct-data-fields>div{gap:9px;align-items:flex-start}
+.ct-preview-mobile .ct-data-fields code{font-size:10px;flex-shrink:0}
+.ct-preview-mobile .ct-data-fields span{font-size:10px}
+@media(max-width:700px){.ct-preview-desktop .ct-global-sidebar{height:100dvh;overflow-y:auto}}
