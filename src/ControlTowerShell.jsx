@@ -4,6 +4,7 @@ import {
   Monitor, Network, Newspaper, Smartphone,
 } from 'lucide-react';
 import App from './App.jsx';
+import TodayDashboard from './TodayDashboard.jsx';
 import { sectors } from './sectorNavigation.js';
 
 const sectorIcons = { project: Network, ai: Bot, data: Database, brief: Newspaper, archive: Archive };
@@ -15,7 +16,7 @@ const initialMode = () => (
 
 export default function ControlTowerShell() {
   const [activeSector, setActiveSector] = useState('project');
-  const [activePage, setActivePage] = useState('map');
+  const [activePage, setActivePage] = useState('home');
   const [previewMode, setPreviewMode] = useState(initialMode);
   const sector = sectors.find((item) => item.id === activeSector);
   const page = sector.pages.find((item) => item.id === activePage) ?? sector.pages[0];
@@ -47,10 +48,12 @@ export default function ControlTowerShell() {
             </nav>
           </header>
 
-          {/* Keep the existing project map mounted, retaining its own state and working pages. */}
-          <div className={`ct-project-surface ${activeSector !== 'project' ? 'ct-hidden' : ''}`} aria-hidden={activeSector !== 'project'}>
-            <App />
-          </div>
+          {activeSector === 'project' && activePage === 'home' && (
+            <TodayDashboard onOpenMap={() => setActivePage('map')} />
+          )}
+
+          {/* Original project screens remain unchanged; only the initial landing view is new. */}
+          {activeSector === 'project' && activePage !== 'home' && <div className="ct-project-surface"><App /></div>}
 
           {activeSector !== 'project' && (
             <div className="ct-secondary-layout">
