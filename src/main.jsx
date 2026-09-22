@@ -8,6 +8,7 @@ import './control-tower-shell.css';
 import './today-dashboard.css';
 import './today-task-actions.css';
 import './sidebar-accordion.css';
+import './audit-fixes.css';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
