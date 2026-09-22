@@ -1,14 +1,20 @@
 /* Audit follow-up: one sidebar, predictable mobile navigation, no invented live data. */
 .ct-workspace-hidden{display:none!important}
 .ct-mobile-menu-toggle{display:none;align-items:center;justify-content:center;margin-left:auto;width:38px;height:38px;background:#1c3147;color:#d5eafe;border:1px solid #3d5c76;border-radius:8px;cursor:pointer}
-.ct-mobile-menu-toggle:focus-visible,.ct-accordion-trigger:focus-visible,.ct-accordion-page:focus-visible{outline:2px solid #8ecbff;outline-offset:2px}
+.ct-mobile-menu-toggle:focus-visible,.ct-accordion-trigger:focus-visible,.ct-accordion-page:focus-visible,.ct-home-return:focus-visible{outline:2px solid #8ecbff;outline-offset:2px}
 .ct-accordion-pages[hidden]{display:none!important}
 .ct-global-sidebar{height:100dvh;overflow-y:auto;overscroll-behavior:contain}
 .ct-global-content{min-height:100vh}
+/* Main Home is always accessible, even when every accordion section is collapsed. */
+.ct-home-return{width:100%;display:flex;align-items:center;gap:11px;min-height:45px;margin:0 0 16px;padding:11px 12px;color:#d7e7f8;background:#142438;border:1px solid #314a63;border-radius:9px;text-align:left;font:inherit;font-size:12px;font-weight:750;cursor:pointer}
+.ct-home-return svg:last-child{margin-left:auto;color:#8fa9c4}
+.ct-home-return:hover{background:#1b344c;border-color:#5b85aa}
+.ct-home-return.is-active{background:#203e59;border-color:#68afe8;color:#fff}
 /* The mobile preview uses the same vertical hierarchy instead of a long horizontal strip. */
 .ct-preview-mobile .ct-global-sidebar{height:auto;max-height:none;overflow:visible;position:static}
 .ct-preview-mobile .ct-global-brand{display:flex;align-items:center;margin-bottom:0;padding-bottom:5px}
 .ct-preview-mobile .ct-mobile-menu-toggle{display:inline-flex}
+.ct-preview-mobile .ct-home-return{margin:8px 0 4px;min-height:40px}
 .ct-preview-mobile .ct-accordion{display:grid;gap:4px;overflow-x:visible;overflow-y:auto;max-height:min(55vh,380px);padding:8px 1px 2px;scrollbar-width:thin}
 .ct-preview-mobile .ct-accordion:not(.is-mobile-open){display:none!important}
 .ct-preview-mobile .ct-accordion-group{min-width:0;width:100%}
