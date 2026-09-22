@@ -50,8 +50,8 @@ function StatusBadge({ status }) {
   return <span className={`status-pill status-${status.toLowerCase()}`}><i />{STATUS[status].label}</span>;
 }
 
-function App() {
-  const [view, setView] = useState('map');
+function App({ initialView = 'map' }) {
+  const [view, setView] = useState(initialView);
   const [filter, setFilter] = useState('ALL');
   const [query, setQuery] = useState('');
   const [selectedId, setSelectedId] = useState('experiment');
