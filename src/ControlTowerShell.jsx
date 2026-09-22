@@ -23,6 +23,7 @@ export default function ControlTowerShell() {
   const sector = sectors.find((item) => item.id === activeSector);
   const page = sector.pages.find((item) => item.id === activePage) ?? sector.pages[0];
   const projectVisible = activeSector === 'project' && activePage !== 'home';
+  const isHome = activeSector === 'project' && activePage === 'home';
 
   function toggleSector(item) {
     setOpenSectors((current) => current.includes(item.id)
@@ -57,6 +58,11 @@ export default function ControlTowerShell() {
                   {mobileMenuOpen ? <X size={19} aria-hidden="true" /> : <Menu size={19} aria-hidden="true" />}
                 </button>
               </div>
+              <button type="button" className={`ct-home-return ${isHome ? 'is-active' : ''}`} onClick={() => goProject('home')} aria-label="메인 홈으로 이동">
+                <LayoutDashboard size={18} aria-hidden="true" />
+                <span>메인 홈</span>
+                <ChevronRight size={16} aria-hidden="true" />
+              </button>
               <nav id="ct-all-sectors" className={`ct-accordion ${mobileMenuOpen ? 'is-mobile-open' : ''}`} aria-label="Control Tower 분야 및 페이지">
                 {sectors.map((item) => {
                   const Icon = sectorIcons[item.id];
