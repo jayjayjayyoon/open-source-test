@@ -12,8 +12,9 @@ test('five sectors have unique identifiers and usable initial pages', () => {
   }
 });
 
-test('existing project subpages and newspaper slot remain discoverable', () => {
-  assert.deepEqual(sectors[0].pages.map(({ id }) => id), ['map', 'board', 'about']);
+test('today overview is first and existing project pages remain discoverable', () => {
+  assert.deepEqual(sectors[0].pages.map(({ id }) => id), ['home', 'map', 'board', 'about']);
+  assert.equal(sectors[0].pages[0].label, '오늘 요약');
   assert.ok(sectors.find(({ id }) => id === 'brief').pages.some(({ id }) => id === 'morning'));
   assert.ok(sectors.find(({ id }) => id === 'data').pages.some(({ id }) => id === 'missing'));
 });
