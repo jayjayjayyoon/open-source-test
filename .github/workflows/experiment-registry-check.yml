@@ -4,8 +4,10 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'experiments/README.md'
-      - 'tests/experiment-registry.test.mjs'
+      - 'README.md'
+      - 'experiments/**'
+      - 'tests/**'
+      - 'src/**'
       - 'package.json'
       - '.github/workflows/experiment-registry-check.yml'
   workflow_dispatch:
