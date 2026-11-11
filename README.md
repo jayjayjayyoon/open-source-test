@@ -1,6 +1,10 @@
-# Control Tower — public UI experiment
+# Open Source Lab — public UI and tool experiments
 
-This repository is a **public interface prototype**, not a personal project database. It does **not** collect ChatGPT conversations, calendar, email, or private files.
+This repository hosts the **Control Tower public UI prototype** and separately scoped tool experiments. It is **not** a personal project database. It does **not** collect ChatGPT conversations, calendar, email, or private files.
+
+## Experiment registry
+
+The single [experiment ID and naming registry](experiments/README.md) tracks existing independent experiments, their UI subcases, verified limits, and the next reserved ID. It registers the Control Tower UI suite as `EXP-0001` and the existing GPT-Bridge source as `EXP-0002`, **without moving either codebase or claiming unverified test success**. Future experiments keep their own dependencies isolated from the deployed UI.
 
 ## Pages
 

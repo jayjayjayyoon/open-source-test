@@ -1,0 +1,29 @@
+name: Validate Experiment Registry
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'README.md'
+      - 'experiments/**'
+      - 'tests/**'
+      - 'src/**'
+      - 'package.json'
+      - '.github/workflows/experiment-registry-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  registry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out pull-request content
+        uses: actions/checkout@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run isolated root UI tests and registry invariants
+        run: npm test
