@@ -4,55 +4,83 @@ import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, relative, isAbsolute } from 'node:path';
 
-const repositoryRoot = fileURLToPath(new URL('../', import.meta.url));
-const registryPath = resolve(repositoryRoot, 'experiments/README.md');
+const root = fileURLToPath(new URL('../', import.meta.url));
+const registryPath = resolve(root, 'experiments/README.md');
 const registry = readFileSync(registryPath, 'utf8');
+const pkg = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8'));
+const levels = new Set(['source-only', 'bounded-check', 'run-recorded']);
 
-function tableRows(pattern) {
-  return registry.split(/\r?\n/).filter((line) => pattern.test(line));
+function section(from, to) {
+  assert.ok(registry.includes(from), `Missing section: ${from}`);
+  return registry.split(from)[1].split(to)[0];
 }
 
-function cellsOf(row) {
-  return row.split('|').slice(1, -1).map((cell) => cell.trim());
+function tableRows(text) {
+  return text.split(/\r?\n/).filter((line) => /^\|\s*EXP-/.test(line));
 }
 
-test('experiment IDs and slugs are unique and the next ID cannot collide', () => {
-  const rows = tableRows(/^\|\s*EXP-\d{4}\s*\|/);
-  assert.ok(rows.length >= 2, 'Existing UI suite and GPT Bridge must be registered');
+function cells(row) {
+  return row.split('|').slice(1, -1).map((part) => part.trim());
+}
 
+const independent = tableRows(section('## Registered experiments', '### EXP-0001'));
+const cases = tableRows(section('### EXP-0001', '## Minimal workflow'));
+
+test('registered experiment IDs/slugs are well-formed, ordered, unique and never skipped', () => {
+  assert.ok(independent.length >= 2, 'Keep original UI suite and GPT Bridge');
   const ids = [], slugs = [];
-  for (const row of rows) {
-    const cells = cellsOf(row);
-    assert.ok(cells.length >= 6, 'Every experiment needs the six index fields');
-    assert.match(cells[0], /^EXP-\d{4}$/);
-    assert.match(cells[1], /^`[a-z0-9]+(?:-[a-z0-9]+)*`$/);
-    ids.push(cells[0]);
-    slugs.push(cells[1]);
+  for (const row of independent) {
+    const fields = cells(row);
+    assert.equal(fields.length, 7, 'Registry rows need exactly seven columns');
+    assert.match(fields[0], /^EXP-\d{4}$/);
+    assert.match(fields[1], /^`[a-z0-9]+(?:-[a-z0-9]+)*`$/);
+    assert.match(fields[2], /^`[a-z0-9]+(?:-[a-z0-9]+)*`$/);
+    assert.match(fields[5], /^`[a-z-]+`$/);
+    assert.ok(levels.has(fields[5].slice(1, -1)), 'Unknown evidence level');
+    assert.ok(fields[6].length > 12, 'Every status needs its evidence boundary');
+    ids.push(fields[0]); slugs.push(fields[1]);
   }
-  assert.equal(new Set(ids).size, ids.length, 'Experiment IDs must never repeat');
-  assert.equal(new Set(slugs).size, slugs.length, 'Experiment slugs must never repeat');
-
+  assert.equal(new Set(ids).size, ids.length, 'Duplicate experiment ID');
+  assert.equal(new Set(slugs).size, slugs.length, 'Duplicate slug');
+  assert.deepEqual(ids.map((id) => Number(id.slice(4))), ids.map((_, index) => index + 1),
+    'IDs must be ordered and existing IDs retained (no gaps)');
   const next = registry.match(/\*\*Next EXP ID:\s*`(EXP-\d{4})`\*\*/);
-  assert.ok(next, 'State the next unassigned experiment ID');
-  assert.equal(Number(next[1].slice(4)), Math.max(...ids.map((id) => Number(id.slice(4)))) + 1);
+  assert.ok(next, 'Declare next ID');
+  assert.equal(Number(next[1].slice(4)), ids.length + 1, 'Next ID must follow the last row');
 });
 
-test('registered local source links resolve and are inside this repository', () => {
-  const rows = tableRows(/^\|\s*EXP-\d{4}\s*\|/);
-  for (const row of rows) {
-    const cells = cellsOf(row);
-    const link = cells[3].match(/\[[^\]]+\]\(([^)]+)\)/);
-    assert.ok(link, 'Every experiment needs an existing source link');
-    if (/^https?:\/\//.test(link[1])) continue; // External upstream link: not a local file.
-    const path = resolve(dirname(registryPath), decodeURIComponent(link[1].split('#')[0]));
-    assert.ok(!relative(repositoryRoot, path).startsWith('..') && !isAbsolute(relative(repositoryRoot, path)), 'Local source link may not leave repo');
-    assert.ok(existsSync(path), `Missing source path: ${link[1]}`);
+test('local experiment source links exist and do not escape repository', () => {
+  for (const row of independent) {
+    const fields = cells(row);
+    for (const index of [3, 4]) {
+      const link = fields[index].match(/\[[^\]]+\]\(([^)]+)\)/);
+      assert.ok(link, `EXP ${fields[0]}: source/upstream needs a real link`);
+      if (/^https:\/\//.test(link[1])) continue;
+      assert.ok(!/^\w+:/.test(link[1]), 'Unsupported URL protocol');
+      const path = resolve(dirname(registryPath), decodeURIComponent(link[1].split('#')[0]));
+      const rel = relative(root, path);
+      assert.ok(rel && rel !== '..' && !rel.startsWith('../') && !rel.startsWith('..\\')
+        && !isAbsolute(rel), `Link leaves repository: ${link[1]}`);
+      assert.ok(existsSync(path), `Missing source path: ${link[1]}`);
+    }
   }
 });
 
-test('UI subcases are unique children of registered experiments', () => {
-  const ids = new Set(tableRows(/^\|\s*EXP-\d{4}\s*\|/).map((row) => cellsOf(row)[0]));
-  const subcases = tableRows(/^\|\s*EXP-\d{4}\/UI-\d{2}\s*\|/).map((row) => cellsOf(row)[0]);
-  assert.equal(new Set(subcases).size, subcases.length, 'Duplicate UI subcase');
-  for (const id of subcases) assert.ok(ids.has(id.split('/')[0]), `Unknown parent for ${id}`);
+test('UI subcases are unique and point to known parent experiments', () => {
+  const parents = new Set(independent.map((row) => cells(row)[0]));
+  const seen = new Set();
+  assert.equal(cases.length, 3, 'Preserve all existing three UI pages');
+  for (const row of cases) {
+    const fields = cells(row);
+    assert.equal(fields.length, 3, 'UI case: ID, page link, purpose');
+    assert.match(fields[0], /^EXP-\d{4}\/UI-\d{2}$/);
+    assert.ok(parents.has(fields[0].split('/')[0]), 'Case without registered parent');
+    assert.ok(!seen.has(fields[0]), 'Duplicate UI case');
+    seen.add(fields[0]);
+    assert.match(fields[1], /\]\(https:\/\//, 'UI page needs a concrete URL');
+  }
+});
+
+test('root UI tests are scoped: experimental tools must not be executed implicitly', () => {
+  assert.equal(pkg.scripts.test, 'node --test "tests/*.test.mjs"');
 });
