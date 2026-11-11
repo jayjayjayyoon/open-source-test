@@ -69,7 +69,7 @@ test('local experiment source links exist and do not escape repository', () => {
 test('UI subcases are unique and point to known parent experiments', () => {
   const parents = new Set(independent.map((row) => cells(row)[0]));
   const seen = new Set();
-  assert.equal(cases.length, 3, 'Preserve all existing three UI pages');
+  assert.ok(cases.length >= 3, 'Do not lose the original three UI cases');
   for (const row of cases) {
     const fields = cells(row);
     assert.equal(fields.length, 3, 'UI case: ID, page link, purpose');
@@ -78,6 +78,9 @@ test('UI subcases are unique and point to known parent experiments', () => {
     assert.ok(!seen.has(fields[0]), 'Duplicate UI case');
     seen.add(fields[0]);
     assert.match(fields[1], /\]\(https:\/\//, 'UI page needs a concrete URL');
+  }
+  for (const baseline of ['EXP-0001/UI-01', 'EXP-0001/UI-02', 'EXP-0001/UI-03']) {
+    assert.ok(seen.has(baseline), `Original public UI case missing: ${baseline}`);
   }
 });
 
