@@ -23,5 +23,5 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate IDs, evidence states and local source references
-        run: node --test "tests/experiment-registry.test.mjs"
+      - name: Run isolated root UI tests and registry invariants
+        run: npm test
