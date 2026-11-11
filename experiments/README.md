@@ -18,7 +18,7 @@
 | ID | Slug | Kind | Local source | Original / upstream | Evidence level | Verified limit / unknown |
 |---|---|---|---|---|---|---|
 | EXP-0001 | `control-tower-ui` | `ui-suite` | [current UI code](../src/ControlTowerShell.jsx) | [this repository](https://github.com/jayjayjayyoon/open-source-test) | `bounded-check` | 2026-09-25 Pages CI recorded success for sample UI. No current real-person project data; live site not independently revisited in this review |
-| EXP-0002 | `gpt-bridge` | `developer-tool` | [bundled extension source](GPT-Bridge/README.kr.md) | [DreamURL/GPT-Bridge](https://github.com/DreamURL/GPT-Bridge) is named in bundled instructions; exact source revision and license evidence **unverified** | `source-only` | Source snapshot present; user's PC installation, MCP tunnel and end-to-end tool tests **not verified** |
+| EXP-0002 | `gpt-bridge` | `developer-tool` | [extension code](GPT-Bridge/src/extension.ts) | [DreamURL/GPT-Bridge @ 699b888](https://github.com/DreamURL/GPT-Bridge/tree/699b8885d4faf8e48a3ecfdcd43781807f7fc6a4) — 51/51 tracked files have matching Git blob hashes (2026-11-12 KST) | `source-only` | Upstream README declares MIT, but no standalone LICENSE file was found: verify applicable license/attribution before further distribution. User-PC installation, MCP tunnel and end-to-end tests not verified |
 
 Evidence level concerns **technical observations**, not Notion task status:
 - `source-only` — source/link exists, no directly supported run.
@@ -26,6 +26,7 @@ Evidence level concerns **technical observations**, not Notion task status:
 - `run-recorded` — one or more actual runs have documented dated evidence in the private Results repo; **not** synonymous with passed or production-ready.
 
 Do not upgrade a level on the basis of an upstream README, an unrelated CI check, or a proposed test plan. If a run fails or is inconclusive, keep its observed failure and decision in Results; never rewrite it as a success.
+A matching upstream Git snapshot establishes **source identity**, not functionality, complete licensing permissions, installation success or approval to execute. The 51/51 comparison covers tracked files at the stated upstream commit.
 
 ### EXP-0001 — UI cases (one parent experiment)
 
