@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "request_id": "RUN-20261115-INSTALL-01",
+  "experiments": [
+    "youtube-ytdlp",
+    "instagram-instaloader"
+  ],
+  "mode": "install-only",
+  "public_url": null
+}

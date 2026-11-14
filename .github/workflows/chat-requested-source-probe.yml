@@ -1,0 +1,33 @@
+name: Chat-requested Source Probe (EXP-0003 / EXP-0004)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/run-requests/current.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: requested-content-probe
+  cancel-in-progress: false
+
+jobs:
+  requested-probe:
+    name: Execute explicit source test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out reviewed code and request
+        uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Deno for YouTube JavaScript support
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Execute requested install check or single public URL probe
+        run: python scripts/run-requested-source-probes.py
