@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "request_id": "RUN-20261115-YOUTUBE-05-HOSTED-TRANSCRIPTS",
+  "request_id": "RUN-20261115-YOUTUBE-07-NEW-VIDEO",
   "experiments": [
     "youtube-ytdlp"
   ],
   "mode": "hosted-free-transcripts",
-  "public_url": "https://www.youtube.com/watch?v=76js2AphU5g"
+  "public_url": "https://www.youtube.com/watch?v=qEVZ7AgB7zI"
 }
