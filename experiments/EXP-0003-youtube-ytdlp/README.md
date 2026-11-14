@@ -34,3 +34,21 @@ For a *separate local-only* subtitle test with a video you have the right to pro
 - Actual video retrieval may fail due to YouTube login, token, geographic, network or anti-automation restrictions; GitHub-hosted runner results may differ from local PC results.
 - Record first real run as `RUN-01` in the designated **private** Results repository, with date, sanitized error, yt-dlp version, environment and pass/fail. Do not put full downloaded media or unreviewed transcripts in this public repository.
 - No ChatGPT web chat direct invocation is configured: GitHub Actions is a separate execution system.
+
+## Free alternatives comparison (RUN-03)
+
+After a previous yt-dlp public-url run hit YouTube's bot-sign-in check, we compare independent single-video, anonymous, no-key methods. No cookies, proxies, passwords, paid API, or repeated scraping.
+
+Source: [alternative_free_methods.py](alternative_free_methods.py).
+
+- [YouTube oEmbed](https://www.youtube.com/oembed): public embed title/channel/thumbnail.
+- [noembed](https://noembed.com): third-party metadata; receives the public video URL.
+- YouTube watch page: HTML OG title if provided.
+- Privacy-enhanced YouTube embed: HTML OG title if provided.
+- Public YouTube thumbnail CDN: image response only (not video information).
+- [youtube-transcript-api](https://github.com/jdepoix/youtube-transcript-api): transcript segments when accessible; not printing raw text.
+- [pytubefix](https://github.com/JuanBindez/pytubefix): video metadata without login when accessible.
+
+Each method is attempted once, with a 30-second timeout. The job prints METHOD_RESULT and SUMMARY_JSON lines. A successful workflow job may still contain individual failed methods. All inputs and logs are public.
+
+Official YouTube Data API requires a separately provided API key despite the free quota; none is configured in this project. This comparison cannot validate the official API or consumer-PC network access. Record observed runs in the private results repository.
