@@ -1,0 +1,82 @@
+name: Manual Public Content Probe (EXP-0003 / EXP-0004)
+
+on:
+  workflow_dispatch:
+    inputs:
+      experiment:
+        description: Choose one independent experiment
+        required: true
+        type: choice
+        default: youtube-ytdlp
+        options:
+          - youtube-ytdlp
+          - instagram-instaloader
+      mode:
+        description: Start with install-only; select public-url for a real source check
+        required: true
+        type: choice
+        default: install-only
+        options:
+          - install-only
+          - public-url
+      public_url:
+        description: Single PUBLIC HTTPS video/post URL only; input and logs are public
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    name: Manual source probe
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check out experiment harness
+        uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Deno for yt-dlp EJS support
+        if: ${{ inputs.experiment == 'youtube-ytdlp' }}
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Install yt-dlp (selected only)
+        if: ${{ inputs.experiment == 'youtube-ytdlp' }}
+        run: |
+          python -m pip install --disable-pip-version-check 'yt-dlp[default]'
+          python -m yt_dlp --version
+          deno --version
+      - name: Install Instaloader (selected only)
+        if: ${{ inputs.experiment == 'instagram-instaloader' }}
+        run: |
+          python -m pip install --disable-pip-version-check instaloader
+          python -m instaloader --version
+      - name: Offline syntax and URL validation
+        shell: bash
+        run: |
+          if [ '${{ inputs.experiment }}' = 'youtube-ytdlp' ]; then
+            python -m py_compile experiments/EXP-0003-youtube-ytdlp/probe.py
+            python experiments/EXP-0003-youtube-ytdlp/probe.py --self-test
+          else
+            python -m py_compile experiments/EXP-0004-instagram-instaloader/probe.py
+            python experiments/EXP-0004-instagram-instaloader/probe.py --self-test
+          fi
+      - name: Probe one public URL (explicit opt-in only)
+        if: ${{ inputs.mode == 'public-url' }}
+        shell: bash
+        env:
+          PROBE_URL: ${{ inputs.public_url }}
+        run: |
+          if [ -z "$PROBE_URL" ]; then
+            echo 'Missing public_url input; no source accessed.' >&2
+            exit 2
+          fi
+          if [ '${{ inputs.experiment }}' = 'youtube-ytdlp' ]; then
+            python experiments/EXP-0003-youtube-ytdlp/probe.py "$PROBE_URL"
+          else
+            python experiments/EXP-0004-instagram-instaloader/probe.py "$PROBE_URL"
+          fi
