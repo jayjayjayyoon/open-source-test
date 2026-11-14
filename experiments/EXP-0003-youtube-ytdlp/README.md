@@ -2,7 +2,7 @@
 
 **Question:** Can the free [yt-dlp](https://github.com/yt-dlp/yt-dlp) Python package retrieve **one public YouTube video's metadata and available subtitle language list**, without login, media downloads, or paid APIs?
 
-**Status:** `source-only` until a recorded run. Upstream README/code reviewed; this repository has not established live YouTube success. Upstream source is **not copied** here. The upstream repository uses Unlicense for source code; distributed binaries can carry other licenses.
+**Status:** `run-recorded` — yt-dlp installed successfully but real anonymous YouTube access **failed** on a GitHub-hosted runner due to a bot sign-in check. This does NOT imply that yt-dlp fails on local PCs or other supported sites. Upstream source is **not copied** here. The upstream repository uses Unlicense for source code; distributed binaries can carry other licenses.
 
 ## Zero-cost browser test via GitHub Actions
 
@@ -52,3 +52,7 @@ Source: [alternative_free_methods.py](alternative_free_methods.py).
 Each method is attempted once, with a 30-second timeout. The job prints METHOD_RESULT and SUMMARY_JSON lines. A successful workflow job may still contain individual failed methods. All inputs and logs are public.
 
 Official YouTube Data API requires a separately provided API key despite the free quota; none is configured in this project. This comparison cannot validate the official API or consumer-PC network access. Record observed runs in the private results repository.
+
+## Selected successor for transcript-first use
+
+**EXP-0005 — [youtube-transcript-bridge](../EXP-0005-youtube-transcript-bridge/README.md)** is the new default for ChatGPT-requested YouTube spoken-content retrieval. Its observed upstream path uses hosted free transcript API/MCP services (with Korean-first preference), NOT yt-dlp. The historical RUN-05–08 hosted tests remain correctly attributed to EXP-0003; the separate successor needs its own fresh run. This directory preserves genuine yt-dlp installer and bot-check evidence. Do not call hosted transcript successes `yt-dlp success`.
