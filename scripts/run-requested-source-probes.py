@@ -48,12 +48,12 @@ def main() -> int:
         raise ValueError("Unknown experiment.")
     mode = request["mode"]
     url = request["public_url"]
-    if mode not in {"install-only", "public-url", "free-alternatives"}:
+    if mode not in {"install-only", "public-url", "free-alternatives", "hosted-free-transcripts"}:
         raise ValueError("Unknown mode.")
     if mode == "install-only":
         if url is not None:
             raise ValueError("install-only must not provide a URL.")
-    elif mode == "free-alternatives":
+    elif mode in {"free-alternatives", "hosted-free-transcripts"}:
         if experiments != ["youtube-ytdlp"] or not isinstance(url, str):
             raise ValueError("Alternative methods require exactly one public YouTube URL.")
         import re
@@ -66,6 +66,15 @@ def main() -> int:
         if len(url) > 800 or not url.startswith("https://"):
             raise ValueError("Invalid URL.")
     print(f"Request {request['request_id']} | mode={mode} | experiments={experiments}", flush=True)
+    if mode == "hosted-free-transcripts":
+        script = ROOT / "experiments" / "EXP-0003-youtube-ytdlp" / "hosted_transcript_sources.py"
+        exec_step("hosted transcript methods: compile", [sys.executable, "-m", "py_compile", str(script)])
+        exec_step("hosted transcript methods: install HTTP library", [
+            sys.executable, "-m", "pip", "install", "--disable-pip-version-check", "requests"])
+        video_id = url.split("v=", 1)[1]
+        exec_step("hosted transcript methods: six bounded public requests", [
+            sys.executable, str(script), "--video-id", video_id])
+        return 0
     if mode == "free-alternatives":
         script = ROOT / "experiments" / "EXP-0003-youtube-ytdlp" / "alternative_free_methods.py"
         exec_step("alternatives: compile", [sys.executable, "-m", "py_compile", str(script)])
