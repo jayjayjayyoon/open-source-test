@@ -154,7 +154,7 @@ def main():
         command = [sys.executable, __file__, "--video-id", args.video_id, "--single", method]
         try:
             process = subprocess.run(command, capture_output=True, text=True, timeout=30, check=False)
-            lines = [line for line in process.stdout.splitlines() if line.startswith('{"method"')]
+            lines = [line for line in process.stdout.splitlines() if line.lstrip().startswith('{') and '"method"' in line]
             result = json.loads(lines[-1]) if lines else {
                 "method": method, "status": "failed",
                 "reason": ("child exit: " + str(process.returncode))}
