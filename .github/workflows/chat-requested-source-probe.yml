@@ -1,4 +1,4 @@
-name: Chat-requested Source Probe (EXP-0003 / EXP-0004)
+name: Chat-requested Source Probe (EXP-0003 / EXP-0004 / EXP-0005)
 
 on:
   push:

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Execute one reviewed, public, opt-in GitHub Actions source probe request.
 
-This file runs only after an explicitly committed request. It never handles cookies,
+This file runs only after an explicitly committed request. Current video-caption default\nuses EXP-0005 hosted free transcript sources; EXP-0003 yt-dlp remains a separate probe.\nIt never handles cookies,
 credentials, private content, media downloads, or background scheduling.
 """
 import json
@@ -16,6 +16,11 @@ PROBES = {
         "file": ROOT / "experiments" / "EXP-0003-youtube-ytdlp" / "probe.py",
         "package": "yt-dlp[default]",
         "version": [sys.executable, "-m", "yt_dlp", "--version"],
+    },
+    "youtube-transcript-bridge": {
+        "file": ROOT / "experiments" / "EXP-0005-youtube-transcript-bridge" / "probe.py",
+        "package": "requests",
+        "version": [sys.executable, "-c", "import requests; print('requests', requests.__version__)"],
     },
     "instagram-instaloader": {
         "file": ROOT / "experiments" / "EXP-0004-instagram-instaloader" / "probe.py",
