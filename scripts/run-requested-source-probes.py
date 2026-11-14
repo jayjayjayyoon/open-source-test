@@ -48,11 +48,17 @@ def main() -> int:
         raise ValueError("Unknown experiment.")
     mode = request["mode"]
     url = request["public_url"]
-    if mode not in {"install-only", "public-url"}:
+    if mode not in {"install-only", "public-url", "free-alternatives"}:
         raise ValueError("Unknown mode.")
     if mode == "install-only":
         if url is not None:
             raise ValueError("install-only must not provide a URL.")
+    elif mode == "free-alternatives":
+        if experiments != ["youtube-ytdlp"] or not isinstance(url, str):
+            raise ValueError("Alternative methods require exactly one public YouTube URL.")
+        import re
+        if not re.fullmatch(r"https://www\.youtube\.com/watch\?v=[A-Za-z0-9_-]{11}", url):
+            raise ValueError("Use a canonical public YouTube watch URL, no playlist context.")
     else:
         if len(experiments) != 1 or not isinstance(url, str):
             raise ValueError("public-url requires exactly one experiment and one URL.")
@@ -60,6 +66,16 @@ def main() -> int:
         if len(url) > 800 or not url.startswith("https://"):
             raise ValueError("Invalid URL.")
     print(f"Request {request['request_id']} | mode={mode} | experiments={experiments}", flush=True)
+    if mode == "free-alternatives":
+        script = ROOT / "experiments" / "EXP-0003-youtube-ytdlp" / "alternative_free_methods.py"
+        exec_step("alternatives: compile", [sys.executable, "-m", "py_compile", str(script)])
+        exec_step("alternatives: install free libraries", [
+            sys.executable, "-m", "pip", "install", "--disable-pip-version-check",
+            "youtube-transcript-api", "pytubefix"])
+        video_id = url.split("v=", 1)[1]
+        exec_step("alternatives: 7 independent single-video checks", [
+            sys.executable, str(script), "--video-id", video_id])
+        return 0
     for exp in experiments:
         probe = PROBES[exp]
         exec_step(f"{exp}: compile", [sys.executable, "-m", "py_compile", str(probe["file"])])
