@@ -11,7 +11,7 @@
 - This Markdown table is the **one and only ID/slug authority**. Private results **reuse** IDs but do not allocate them. Lab index = public technical inventory; private Results = detailed run evidence; Notion = live work status and actions. Do not synchronize or replicate each other's state as a separate ledger.
 - Before **merging** a branch with a new ID, inspect the latest `main` and other pending experiment PRs, resolve simultaneous reservations and rerun validation. Unmerged branches do not reserve an ID globally.
 
-**Next EXP ID: `EXP-0003`** (derived from the highest registered ID; change it together with the newly added row).
+**Next EXP ID: `EXP-0005`** (derived from the highest registered ID; change it together with the newly added row).
 
 ## Registered experiments
 
@@ -19,6 +19,8 @@
 |---|---|---|---|---|---|---|
 | EXP-0001 | `control-tower-ui` | `ui-suite` | [current UI code](../src/ControlTowerShell.jsx) | [this repository](https://github.com/jayjayjayyoon/open-source-test) | `bounded-check` | 2026-09-25 Pages CI recorded success for sample UI. No current real-person project data; live site not independently revisited in this review |
 | EXP-0002 | `gpt-bridge` | `developer-tool` | [extension code](GPT-Bridge/src/extension.ts) | [DreamURL/GPT-Bridge @ 699b888](https://github.com/DreamURL/GPT-Bridge/tree/699b8885d4faf8e48a3ecfdcd43781807f7fc6a4) — 51/51 tracked files have matching Git blob hashes (2026-11-12 KST) | `source-only` | Upstream README declares MIT, but no standalone LICENSE file was found: verify applicable license/attribution before further distribution. User-PC installation, MCP tunnel and end-to-end tests not verified |
+| EXP-0003 | `youtube-ytdlp` | `data-collector` | [opt-in probe](EXP-0003-youtube-ytdlp/probe.py) | [yt-dlp upstream](https://github.com/yt-dlp/yt-dlp) | `source-only` | Manual smoke-test harness prepared; no live YouTube access verified, captions only listed, not downloaded; public GitHub runner may be blocked |
+| EXP-0004 | `instagram-instaloader` | `data-collector` | [opt-in probe](EXP-0004-instagram-instaloader/probe.py) | [Instaloader upstream](https://github.com/instaloader/instaloader) | `source-only` | Manual smoke-test harness prepared; anonymous access and Instagram rate limits unknown, no login, comments or media downloaded |
 
 Evidence level concerns **technical observations**, not Notion task status:
 - `source-only` — source/link exists, no directly supported run.
