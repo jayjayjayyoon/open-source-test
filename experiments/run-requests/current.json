@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "request_id": "RUN-20261115-YOUTUBE-02",
+  "request_id": "RUN-20261115-YOUTUBE-03-FREE-METHODS",
   "experiments": [
     "youtube-ytdlp"
   ],
-  "mode": "public-url",
+  "mode": "free-alternatives",
   "public_url": "https://www.youtube.com/watch?v=76js2AphU5g"
 }
